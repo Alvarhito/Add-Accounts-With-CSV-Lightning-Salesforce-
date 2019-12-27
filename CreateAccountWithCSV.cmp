@@ -1,0 +1,41 @@
+<aura:component controller="CreateAccountWithCSV" 
+                implements="force:hasRecordId,flexipage:availableForAllPageTypes,force:appHostable,flexipage:availableForRecordHome,force:lightningQuickAction"
+                access="global" >
+    <aura:attribute name="accept" type="List" default="['.csv']"/>
+    <aura:attribute name="multiple" type="Boolean" default="true"/>
+    
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="data" type="List"/>
+    
+    <aura:attribute name="headers" type="List"/>
+    
+    <aura:attribute name="isLoad" type="Boolean" default="false"/>
+    <aura:attribute name="saving" type="Boolean" default="false"/>
+    
+    <lightning:input name="Create Account" 
+                     type="file" 
+                     label="Crate Account" 
+                     multiple="{!v.multiple}" 
+                     accept=".csv" 
+                     onchange="{! c.handleUploadFinished}"
+                     class=""/>
+    <aura:if isTrue="{!v.isLoad}">
+        <div class="slds-align_absolute-center">
+            <lightning:spinner style="position: relative;display: inline-block;width: 80px; height: 80px;" size="small"/>
+        </div>
+        <aura:set attribute="else">
+            <div style="max-height: 300px; min-width: 500px" class="slds-col slds-size_12-of-12 slds-scrollable_y">
+                <lightning:datatable keyField="id"
+                                     data="{! v.data }"
+                                     columns="{! v.columns }"
+                                     hideCheckboxColumn="true"
+                                     onrowaction="{! c.handleRowAction }"/>
+            </div>
+            <div class="slds-align_absolute-center slds-m-around_x-small">
+                <lightning:button variant="brand" label="Save" onclick="{! c.save }" disabled='{!v.saving}'/>
+            </div>
+        </aura:set>
+    </aura:if>
+
+    
+</aura:component>

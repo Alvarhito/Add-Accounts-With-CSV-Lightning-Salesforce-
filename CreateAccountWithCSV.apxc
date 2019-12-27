@@ -1,0 +1,14 @@
+public class CreateAccountWithCSV {
+    @AuraEnabled
+    public static Account saveAccount(Account obj){
+        insert obj;
+        return obj;
+    }
+    
+    @AuraEnabled
+    public static Account updateAccount(Account obj){
+        update obj;
+        return obj;
+    }
+
+}
